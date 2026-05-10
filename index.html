@@ -5,8 +5,6 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
   <title>Pro Fire Inspection System</title>
   <script src="https://cdn.tailwindcss.com"></script>
-  <!-- Library untuk Export Excel -->
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.18.5/xlsx.full.min.js"></script>
   <style>
     @import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap');
     
@@ -91,17 +89,17 @@
           <div class="space-y-4">
             <div>
               <label class="block text-[10px] font-black text-slate-400 uppercase mb-1">Gedung / Proyek</label>
-              <input type="text" name="building_name" id="building_name" required placeholder="Masukkan nama lokasi" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-slate-900 outline-none transition-all">
+              <input type="text" name="building_name" required placeholder="Masukkan nama lokasi" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl focus:ring-2 focus:ring-slate-900 outline-none transition-all">
             </div>
             
             <div class="grid grid-cols-2 gap-4">
               <div>
                 <label class="block text-[10px] font-black text-slate-400 uppercase mb-1">Tanggal</label>
-                <input type="date" name="inspect_date" id="inspect_date" required class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none">
+                <input type="date" name="inspect_date" required class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none">
               </div>
               <div>
                 <label class="block text-[10px] font-black text-slate-400 uppercase mb-1">Pemeriksa</label>
-                <input type="text" name="inspector_name" id="inspector_name" required placeholder="Nama lengkap pemeriksa" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none">
+                <input type="text" name="inspector_name" required placeholder="Nama lengkap pemeriksa" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none">
               </div>
             </div>
           </div>
@@ -152,7 +150,7 @@
       <!-- Submit Footer -->
       <div class="fixed bottom-0 left-0 right-0 p-6 bg-white/90 backdrop-blur-lg border-t border-slate-100 max-w-2xl mx-auto z-50">
         <button type="submit" id="btnSubmit" class="w-full bg-slate-900 text-white py-5 rounded-2xl font-black text-sm uppercase tracking-widest shadow-2xl hover:bg-black transition-all active:scale-95 disabled:opacity-50">
-          Unduh Laporan (Excel)
+          Finalisasi & Simpan Laporan
         </button>
       </div>
     </form>
@@ -224,7 +222,7 @@
           <div class="bg-red-50 p-3 rounded-2xl grid grid-cols-2 gap-3 mb-2 border border-red-100">
             <div class="space-y-1">
               <span class="text-[9px] font-black text-red-400 uppercase tracking-tighter">Jenis Media</span>
-              <select data-field="Media" class="w-full p-2 bg-white border border-red-200 rounded-lg text-xs font-bold outline-none text-red-900">
+              <select class="w-full p-2 bg-white border border-red-200 rounded-lg text-xs font-bold outline-none text-red-900">
                 <option>Dry Powder</option>
                 <option>CO2</option>
                 <option>Foam (AFFF)</option>
@@ -233,7 +231,7 @@
             </div>
             <div class="space-y-1">
               <span class="text-[9px] font-black text-red-400 uppercase tracking-tighter">Kapasitas (Kg)</span>
-              <select data-field="Kapasitas" class="w-full p-2 bg-white border border-red-200 rounded-lg text-xs font-bold outline-none text-red-900">
+              <select class="w-full p-2 bg-white border border-red-200 rounded-lg text-xs font-bold outline-none text-red-900">
                 <option>1.0 Kg</option>
                 <option>2.0 Kg</option>
                 <option>3.0 Kg</option>
@@ -248,27 +246,27 @@
           <div class="apar-grid">
             <div class="space-y-1">
               <span class="text-[9px] font-black text-slate-400 uppercase">Tekanan (Manometer)</span>
-              <select data-field="Tekanan" class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Normal (Green)</option><option>Low (Under)</option><option>Over (Red)</option></select>
+              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Normal (Green)</option><option>Low (Under)</option><option>Over (Red)</option></select>
             </div>
             <div class="space-y-1">
               <span class="text-[9px] font-black text-slate-400 uppercase">Segel & Pin</span>
-              <select data-field="Segel" class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Utuh (Locked)</option><option>Rusak/Lepas</option></select>
+              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Utuh (Locked)</option><option>Rusak/Lepas</option></select>
             </div>
             <div class="space-y-1">
               <span class="text-[9px] font-black text-slate-400 uppercase">Selang & Nozzle</span>
-              <select data-field="Nozzle" class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Baik (Flexible)</option><option>Retak/Pecah</option><option>Tersumbat</option></select>
+              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Baik (Flexible)</option><option>Retak/Pecah</option><option>Tersumbat</option></select>
             </div>
             <div class="space-y-1">
               <span class="text-[9px] font-black text-slate-400 uppercase">Fisik Tabung</span>
-              <select data-field="Fisik" class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Mulus</option><option>Korosi/Karat</option><option>Penyok</option></select>
+              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Mulus</option><option>Korosi/Karat</option><option>Penyok</option></select>
             </div>
             <div class="space-y-1">
               <span class="text-[9px] font-black text-slate-400 uppercase">Masa Berlaku Media</span>
-              <input data-field="Exp" type="month" class="w-full p-2 bg-slate-50 border rounded-lg text-[10px] font-bold outline-none">
+              <input type="month" class="w-full p-2 bg-slate-50 border rounded-lg text-[10px] font-bold outline-none">
             </div>
             <div class="space-y-1">
               <span class="text-[9px] font-black text-slate-400 uppercase">Kondisi Media</span>
-              <select data-field="Kondisi" class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Baik/Cair</option><option>Menggumpal</option><option>Kosong</option></select>
+              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Baik/Cair</option><option>Menggumpal</option><option>Kosong</option></select>
             </div>
           </div>
         `;
@@ -277,7 +275,7 @@
           <div class="bg-blue-50 p-3 rounded-2xl grid grid-cols-2 gap-3 mb-2 border border-blue-100">
             <div class="space-y-1">
               <span class="text-[9px] font-black text-blue-400 uppercase tracking-tighter">Jenis Hydrant</span>
-              <select data-field="Jenis" class="w-full p-2 bg-white border border-blue-200 rounded-lg text-xs font-bold outline-none text-blue-900">
+              <select class="w-full p-2 bg-white border border-blue-200 rounded-lg text-xs font-bold outline-none text-blue-900">
                 <option>Indoor Box</option>
                 <option>Outdoor Pillar</option>
                 <option>Siamese Connection</option>
@@ -285,7 +283,7 @@
             </div>
             <div class="space-y-1">
               <span class="text-[9px] font-black text-blue-400 uppercase tracking-tighter">Status Tekanan</span>
-              <select data-field="Tekanan" class="w-full p-2 bg-white border border-blue-200 rounded-lg text-xs font-bold outline-none text-blue-900">
+              <select class="w-full p-2 bg-white border border-blue-200 rounded-lg text-xs font-bold outline-none text-blue-900">
                 <option>Siaga (Standby)</option>
                 <option>Digunakan</option>
                 <option>Bocor/Rembes</option>
@@ -296,27 +294,27 @@
           <div class="hydrant-grid">
             <div class="space-y-1">
               <span class="text-[9px] font-black text-slate-400 uppercase">Kondisi Box</span>
-              <select data-field="Kond_Box" class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Bersih & Terkunci</option><option>Kotor/Berdebu</option><option>Rusak/Keropos</option></select>
+              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Bersih & Terkunci</option><option>Kotor/Berdebu</option><option>Rusak/Keropos</option></select>
             </div>
             <div class="space-y-1">
               <span class="text-[9px] font-black text-slate-400 uppercase">Main Valve</span>
-              <select data-field="Main_Valve" class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Normal/Lancar</option><option>Macet/Keras</option><option>Patah/Hilang</option></select>
+              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Normal/Lancar</option><option>Macet/Keras</option><option>Patah/Hilang</option></select>
             </div>
             <div class="space-y-1">
               <span class="text-[9px] font-black text-slate-400 uppercase">Hose (Selang)</span>
-              <select data-field="Hose" class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Ada (Terlipat Rapi)</option><option>Ada (Berantakan)</option><option>Tidak Ada</option><option>Rusak/Bocor</option></select>
+              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Ada (Terlipat Rapi)</option><option>Ada (Berantakan)</option><option>Tidak Ada</option><option>Rusak/Bocor</option></select>
             </div>
             <div class="space-y-1">
               <span class="text-[9px] font-black text-slate-400 uppercase">Nozzle</span>
-              <select data-field="Nozzle" class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Tersedia (Baik)</option><option>Tersedia (Macat)</option><option>Hilang</option></select>
+              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Tersedia (Baik)</option><option>Tersedia (Macat)</option><option>Hilang</option></select>
             </div>
             <div class="space-y-1">
               <span class="text-[9px] font-black text-slate-400 uppercase">Kaca & Kunci Box</span>
-              <select data-field="Kaca_Kunci" class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Utuh</option><option>Pecah</option><option>Kunci Hilang</option></select>
+              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Utuh</option><option>Pecah</option><option>Kunci Hilang</option></select>
             </div>
             <div class="space-y-1">
               <span class="text-[9px] font-black text-slate-400 uppercase">Instruksi Penggunaan</span>
-              <select data-field="Instruksi" class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Terbaca Jelas</option><option>Pudar/Rusak</option><option>Tidak Ada</option></select>
+              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Terbaca Jelas</option><option>Pudar/Rusak</option><option>Tidak Ada</option></select>
             </div>
           </div>
         `;
@@ -325,7 +323,7 @@
           <div class="bg-yellow-50 p-3 rounded-2xl grid grid-cols-2 gap-3 mb-2 border border-yellow-100">
             <div class="space-y-1">
               <span class="text-[9px] font-black text-yellow-600 uppercase tracking-tighter">Jenis Perangkat</span>
-              <select data-field="Jenis" class="w-full p-2 bg-white border border-yellow-200 rounded-lg text-xs font-bold outline-none text-yellow-900">
+              <select class="w-full p-2 bg-white border border-yellow-200 rounded-lg text-xs font-bold outline-none text-yellow-900">
                 <option>MCFA Panel</option>
                 <option>Smoke Detector</option>
                 <option>Heat Detector</option>
@@ -335,7 +333,7 @@
             </div>
             <div class="space-y-1">
               <span class="text-[9px] font-black text-yellow-600 uppercase tracking-tighter">Indikasi Panel</span>
-              <select data-field="Indikasi" class="w-full p-2 bg-white border border-yellow-200 rounded-lg text-xs font-bold outline-none text-yellow-900">
+              <select class="w-full p-2 bg-white border border-yellow-200 rounded-lg text-xs font-bold outline-none text-yellow-900">
                 <option>Normal (Green)</option>
                 <option>Fire (Red)</option>
                 <option>Fault/Trouble</option>
@@ -346,27 +344,27 @@
           <div class="alarm-grid">
             <div class="space-y-1">
               <span class="text-[9px] font-black text-slate-400 uppercase">Suplai Daya</span>
-              <select data-field="Power" class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>PLN OK</option><option>Genset Only</option><option>Daya Mati</option></select>
+              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>PLN OK</option><option>Genset Only</option><option>Daya Mati</option></select>
             </div>
             <div class="space-y-1">
               <span class="text-[9px] font-black text-slate-400 uppercase">Baterai Cadangan</span>
-              <select data-field="Battery" class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Penuh (12V/24V)</option><option>Low Battery</option><option>Rusak/Kosong</option></select>
+              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Penuh (12V/24V)</option><option>Low Battery</option><option>Rusak/Kosong</option></select>
             </div>
             <div class="space-y-1">
               <span class="text-[9px] font-black text-slate-400 uppercase">Uji Suara/Bell</span>
-              <select data-field="Sound" class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Nyaring/Clear</option><option>Lemah/Sember</option><option>Tidak Bunyi</option></select>
+              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Nyaring/Clear</option><option>Lemah/Sember</option><option>Tidak Bunyi</option></select>
             </div>
             <div class="space-y-1">
               <span class="text-[9px] font-black text-slate-400 uppercase">Kondisi Detektor</span>
-              <select data-field="Detector" class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Bersih (Sensitif)</option><option>Kotor (Debu)</option><option>Cover Terpasang</option></select>
+              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Bersih (Sensitif)</option><option>Kotor (Debu)</option><option>Cover Terpasang</option></select>
             </div>
             <div class="space-y-1">
               <span class="text-[9px] font-black text-slate-400 uppercase">Manual Call Point</span>
-              <select data-field="MCP" class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Kaca Utuh</option><option>Pecah/Aktif</option><option>Kunci Hilang</option></select>
+              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Kaca Utuh</option><option>Pecah/Aktif</option><option>Kunci Hilang</option></select>
             </div>
             <div class="space-y-1">
               <span class="text-[9px] font-black text-slate-400 uppercase">Wiring/Kabel</span>
-              <select data-field="Wiring" class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Rapi & Tertutup</option><option>Terkelupas</option><option>Short Circuit</option></select>
+              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Rapi & Tertutup</option><option>Terkelupas</option><option>Short Circuit</option></select>
             </div>
           </div>
         `;
@@ -375,11 +373,11 @@
           <div class="bg-green-50 p-3 rounded-2xl grid grid-cols-2 gap-3 mb-2 border border-green-100">
             <div class="space-y-1">
               <span class="text-[9px] font-black text-green-600 uppercase tracking-tighter">Lokasi / Zone</span>
-              <input data-field="Zone" type="text" placeholder="Zone (misal: Zone 1)" class="w-full p-2 bg-white border border-green-200 rounded-lg text-xs font-bold outline-none text-green-900">
+              <input type="text" placeholder="Zone (misal: Zone 1)" class="w-full p-2 bg-white border border-green-200 rounded-lg text-xs font-bold outline-none text-green-900">
             </div>
             <div class="space-y-1">
               <span class="text-[9px] font-black text-green-600 uppercase tracking-tighter">Status Zone Valve</span>
-              <select data-field="Valve" class="w-full p-2 bg-white border border-green-200 rounded-lg text-xs font-bold outline-none text-green-900">
+              <select class="w-full p-2 bg-white border border-green-200 rounded-lg text-xs font-bold outline-none text-green-900">
                 <option>Terbuka (Open)</option>
                 <option>Tertutup (Closed)</option>
                 <option>Tergembok (Locked)</option>
@@ -389,15 +387,15 @@
           <div class="sprinkler-grid">
             <div class="space-y-1">
               <span class="text-[9px] font-black text-slate-400 uppercase">Kondisi Glass Bulb</span>
-              <select data-field="Bulb" class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Utuh (Merah)</option><option>Pecah/Aktif</option><option>Pudar Cairan</option></select>
+              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Utuh (Merah)</option><option>Pecah/Aktif</option><option>Pudar Cairan</option></select>
             </div>
             <div class="space-y-1">
               <span class="text-[9px] font-black text-slate-400 uppercase">Kepala Sprinkler</span>
-              <select data-field="Head" class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Bersih</option><option>Berdebu/Kotor</option><option>Berkarat</option><option>Dicat (Bahaya)</option></select>
+              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Bersih</option><option>Berdebu/Kotor</option><option>Berkarat</option><option>Dicat (Bahaya)</option></select>
             </div>
             <div class="space-y-1">
               <span class="text-[9px] font-black text-slate-400 uppercase">Tekanan Zone</span>
-              <select data-field="Pressure" class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none">
+              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none">
                 <option>Standby (1.4 - 5.5 Bar / 20-80 PSI)</option>
                 <option>Minimum (0.5 Bar / 7 PSI)</option>
                 <option>Low (< 0.5 Bar)</option>
@@ -406,15 +404,15 @@
             </div>
             <div class="space-y-1">
               <span class="text-[9px] font-black text-slate-400 uppercase">Kebocoran Pipa</span>
-              <select data-field="Leak" class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Tidak Ada</option><option>Rembes Halus</option><option>Bocor Deras</option></select>
+              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Tidak Ada</option><option>Rembes Halus</option><option>Bocor Deras</option></select>
             </div>
             <div class="space-y-1">
               <span class="text-[9px] font-black text-slate-400 uppercase">Hambatan (Obstruct)</span>
-              <select data-field="Obstacle" class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Bebas</option><option>Terhalang Plafon</option><option>Terhalang Rak</option></select>
+              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Bebas</option><option>Terhalang Plafon</option><option>Terhalang Rak</option></select>
             </div>
             <div class="space-y-1">
               <span class="text-[9px] font-black text-slate-400 uppercase">Support/Hanger</span>
-              <select data-field="Hanger" class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Kokoh</option><option>Kendur</option><option>Patah/Lepas</option></select>
+              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Kokoh</option><option>Kendur</option><option>Patah/Lepas</option></select>
             </div>
           </div>
         `;
@@ -423,7 +421,7 @@
           <div class="bg-purple-50 p-3 rounded-2xl grid grid-cols-2 gap-3 mb-2 border border-purple-100">
             <div class="space-y-1">
               <span class="text-[9px] font-black text-purple-600 uppercase tracking-tighter">Jenis Proteksi</span>
-              <select data-field="Jenis" class="w-full p-2 bg-white border border-purple-200 rounded-lg text-xs font-bold outline-none text-purple-900">
+              <select class="w-full p-2 bg-white border border-purple-200 rounded-lg text-xs font-bold outline-none text-purple-900">
                 <option>Fire Door (Pintu Darurat)</option>
                 <option>Fire Stopping (Sealant)</option>
                 <option>Emergency Light</option>
@@ -433,7 +431,7 @@
             </div>
             <div class="space-y-1">
               <span class="text-[9px] font-black text-purple-600 uppercase tracking-tighter">Status Kelayakan</span>
-              <select data-field="Status" class="w-full p-2 bg-white border border-purple-200 rounded-lg text-xs font-bold outline-none text-purple-900">
+              <select class="w-full p-2 bg-white border border-purple-200 rounded-lg text-xs font-bold outline-none text-purple-900">
                 <option>Layak (Valid)</option>
                 <option>Perlu Perbaikan</option>
                 <option>Gagal (Critical)</option>
@@ -443,27 +441,27 @@
           <div class="pasif-grid">
             <div class="space-y-1">
               <span class="text-[9px] font-black text-slate-400 uppercase">Pintu (Door Closer)</span>
-              <select data-field="Door_Closer" class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Menutup Sempurna</option><option>Macet/Terganjal</option><option>Engsel Rusak</option></select>
+              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Menutup Sempurna</option><option>Macet/Terganjal</option><option>Engsel Rusak</option></select>
             </div>
             <div class="space-y-1">
               <span class="text-[9px] font-black text-slate-400 uppercase">Panic Bar (Handle)</span>
-              <select data-field="Panic_Bar" class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Lancar (Push OK)</option><option>Keras/Macet</option><option>Patah/Lepas</option></select>
+              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Lancar (Push OK)</option><option>Keras/Macet</option><option>Patah/Lepas</option></select>
             </div>
             <div class="space-y-1">
               <span class="text-[9px] font-black text-slate-400 uppercase">Lampu / Exit Sign</span>
-              <select data-field="Lamp" class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Menyala Terang</option><option>Redup/Berkedip</option><option>Mati Total</option></select>
+              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Menyala Terang</option><option>Redup/Berkedip</option><option>Mati Total</option></select>
             </div>
             <div class="space-y-1">
               <span class="text-[9px] font-black text-slate-400 uppercase">Kerapatan Sealant</span>
-              <select data-field="Sealant" class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Rapat (Kedap)</option><option>Ada Celah (Gap)</option><option>Belum Terpasang</option></select>
+              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Rapat (Kedap)</option><option>Ada Celah (Gap)</option><option>Belum Terpasang</option></select>
             </div>
             <div class="space-y-1">
               <span class="text-[9px] font-black text-slate-400 uppercase">Rambu / Marka</span>
-              <select data-field="Sign" class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Jelas & Fosfor</option><option>Pudar/Kotor</option><option>Tidak Ada</option></select>
+              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Jelas & Fosfor</option><option>Pudar/Kotor</option><option>Tidak Ada</option></select>
             </div>
             <div class="space-y-1">
               <span class="text-[9px] font-black text-slate-400 uppercase">Hambatan Jalur</span>
-              <select data-field="Obstruct" class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Steril/Bersih</option><option>Ada Barang</option><option>Sempit</option></select>
+              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Steril/Bersih</option><option>Ada Barang</option><option>Sempit</option></select>
             </div>
           </div>
         `;
@@ -480,7 +478,7 @@
             </div>
             <div>
               <span class="category-badge bg-${c.color}-100 text-${c.color}-700 uppercase">${c.label}</span>
-              <input data-field="ID_Alat" type="text" placeholder="ID ALAT (Misal: PS-01)" class="block mt-1 text-sm font-black text-slate-800 bg-transparent outline-none border-b border-transparent focus:border-slate-300 w-full">
+              <input type="text" placeholder="ID ALAT (Misal: PS-01)" class="block mt-1 text-sm font-black text-slate-800 bg-transparent outline-none border-b border-transparent focus:border-slate-300 w-full">
             </div>
           </div>
           <button type="button" onclick="this.closest('.card-item').remove(); updateStats();" class="text-slate-300 hover:text-red-500 transition">
@@ -489,13 +487,13 @@
         </div>
 
         <div class="grid grid-cols-2 gap-3">
-           <select data-field="Lantai" class="p-3 bg-slate-50 border border-slate-100 rounded-xl text-xs font-bold outline-none">${floorOptions}</select>
-           <input data-field="Lokasi_Detail" type="text" placeholder="Detail Lokasi" class="p-3 bg-slate-50 border border-slate-100 rounded-xl text-xs outline-none">
+           <select class="p-3 bg-slate-50 border border-slate-100 rounded-xl text-xs font-bold outline-none">${floorOptions}</select>
+           <input type="text" placeholder="Detail Lokasi" class="p-3 bg-slate-50 border border-slate-100 rounded-xl text-xs outline-none">
         </div>
 
         ${specificHTML}
 
-        <textarea data-field="Catatan" placeholder="Catatan temuan teknis..." class="w-full p-3 bg-slate-50 border border-slate-100 rounded-xl text-xs outline-none min-h-[60px]"></textarea>
+        <textarea placeholder="Catatan temuan teknis..." class="w-full p-3 bg-slate-50 border border-slate-100 rounded-xl text-xs outline-none min-h-[60px]"></textarea>
 
         <div class="grid grid-cols-2 gap-2">
            <label class="flex items-center justify-center gap-2 p-3 bg-slate-50 border border-slate-100 rounded-xl cursor-pointer hover:bg-slate-100 transition active:scale-95">
@@ -519,57 +517,6 @@
       window.scrollTo({ top: y, behavior: 'smooth' });
     }
 
-    // Fungsi utama Export Excel
-    function exportToExcel() {
-      const building = document.getElementById('building_name').value || 'Tanpa Nama Gedung';
-      const date = document.getElementById('inspect_date').value;
-      const inspector = document.getElementById('inspector_name').value;
-      
-      const items = document.querySelectorAll('.card-item');
-      if (items.length === 0) {
-        showToast("Tambahkan minimal 1 item temuan!");
-        return;
-      }
-
-      const dataRows = [];
-      
-      items.forEach((card, index) => {
-        const category = card.dataset.category.toUpperCase();
-        const row = {
-          "No": index + 1,
-          "Kategori": category,
-          "Gedung": building,
-          "Tanggal": date,
-          "Pemeriksa": inspector
-        };
-
-        // Ambil semua input/select dengan data-field
-        card.querySelectorAll('[data-field]').forEach(el => {
-          const fieldName = el.getAttribute('data-field');
-          row[fieldName] = el.value;
-        });
-
-        dataRows.push(row);
-      });
-
-      // Proses menggunakan SheetJS
-      const worksheet = XLSX.utils.json_to_sheet(dataRows);
-      const workbook = XLSX.utils.book_new();
-      XLSX.utils.book_append_sheet(workbook, worksheet, "Hasil Inspeksi");
-      
-      // Nama file: Laporan_Inspeksi_[Nama Gedung]_[Tanggal].xlsx
-      const fileName = `Laporan_Inspeksi_${building.replace(/\s+/g, '_')}_${date}.xlsx`;
-      
-      XLSX.writeFile(workbook, fileName);
-    }
-
-    function showToast(msg) {
-      const toast = document.getElementById('toast');
-      toast.innerText = msg;
-      toast.classList.remove('hidden');
-      setTimeout(() => toast.classList.add('hidden'), 3000);
-    }
-
     // Initialize
     window.onload = () => {
       document.getElementsByName('inspect_date')[0].value = new Date().toISOString().split('T')[0];
@@ -579,25 +526,36 @@
     form.onsubmit = function(e) {
       e.preventDefault();
       const btn = document.getElementById('btnSubmit');
+      const toast = document.getElementById('toast');
       
-      // Efek visual sementara
       btn.disabled = true;
-      btn.innerText = "MENYIAPKAN FILE...";
+      btn.innerText = "MENGUNGGAH DATA...";
 
       setTimeout(() => {
-        try {
-          exportToExcel();
-          showToast("BERHASIL DIUNDUH! 📥");
-          
-          // Reset opsional setelah sukses (bisa dihapus jika ingin data tetap ada)
-          // form.reset(); 
-        } catch (err) {
-          showToast("Gagal mengunduh file.");
-        } finally {
-          btn.disabled = false;
-          btn.innerText = "Unduh Laporan (Excel)";
-        }
-      }, 1000);
+        toast.innerText = "LAPORAN BERHASIL DISIMPAN! ✅";
+        toast.classList.remove('hidden');
+        
+        // Reset App
+        form.reset();
+        document.getElementById('items-list').innerHTML = `
+          <div id="empty-state" class="py-20 text-center space-y-4">
+            <div class="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
+            <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Belum ada item ditambahkan</p>
+          </div>
+        `;
+        updateStats();
+        switchTab('general');
+        
+        btn.disabled = false;
+        btn.innerText = "Finalisasi & Simpan Laporan";
+        window.scrollTo(0, 0);
+        
+        setTimeout(() => toast.classList.add('hidden'), 4000);
+      }, 2000);
     };
   </script>
 </body>
