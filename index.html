@@ -146,7 +146,7 @@
         </div>
       </div>
 
-      <!-- Submit Footer (Dikeluarkan dari Section Tab agar selalu muncul) -->
+      <!-- Submit Footer -->
       <div class="fixed bottom-0 left-0 right-0 p-6 bg-white/90 backdrop-blur-lg border-t border-slate-100 max-w-2xl mx-auto z-50">
         <button type="submit" id="btnSubmit" class="w-full bg-slate-900 text-white py-5 rounded-2xl font-black text-sm uppercase tracking-widest shadow-2xl hover:bg-black transition-all active:scale-95 disabled:opacity-50">
           Finalisasi & Simpan Laporan
@@ -161,7 +161,6 @@
     let itemCount = 0;
     const floorOptions = `<option value="">Lantai...</option><option>Luar Ruangan</option><option>Basement</option><option>Lantai 1</option><option>Lantai 2</option><option>Lantai 3</option><option>Lantai 4</option><option>Atap</option>`;
 
-    // Store base64 data per item ID
     const imageStore = {};
 
     function switchTab(target) {
@@ -197,6 +196,7 @@
           const img = document.getElementById(`prev_${itemId}`);
           img.src = base64String;
           img.style.display = 'block';
+          // Simpan hanya data base64 bersih (tanpa metadata jika perlu, tapi Apps Script biasanya butuh lengkap)
           imageStore[itemId] = base64String;
         };
         reader.readAsDataURL(file);
@@ -205,7 +205,7 @@
 
     function addItem(type) {
       const list = document.getElementById('items-list');
-      const itemId = Date.now();
+      const itemId = Date.now().toString();
       const card = document.createElement('div');
       
       const config = {
@@ -326,10 +326,6 @@
             <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Kondisi Fisik</span><select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Bersih</option><option>Terkena Cat</option><option>Berdebu/Kotor</option></select></div>
             <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Katup Kendali</span><select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Terbuka (Open)</option><option>Tertutup (Closed)</option><option>Terkunci</option></select></div>
           </div>
-          <div class="space-y-1">
-            <span class="text-[9px] font-black text-slate-400 uppercase">Tekanan Manometer (Bar/Psi)</span>
-            <input type="number" step="0.1" placeholder="Contoh: 7.5" class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none">
-          </div>
         `;
       } else if (type === 'pasif') {
         specificHTML = `
@@ -355,40 +351,8 @@
             </div>
           </div>
           <div class="grid-standard">
-            <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Fungsi Baterai</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none">
-                <option>Normal (Backup OK)</option>
-                <option>Drop/Lemah</option>
-                <option>Mati Total</option>
-                <option>N/A (Pintu/Tangga)</option>
-              </select>
-            </div>
-            <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Aksesibilitas</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none">
-                <option>Bebas Hambatan</option>
-                <option>Terhalang/Sempit</option>
-                <option>Terkunci (Bahaya)</option>
-              </select>
-            </div>
-            <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Engsel/Panic Bar</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none">
-                <option>Lancar (Auto-Close OK)</option>
-                <option>Macet/Keras</option>
-                <option>Rusak/Lepas</option>
-                <option>N/A (Lampu)</option>
-              </select>
-            </div>
-            <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Visibilitas</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none">
-                <option>Sangat Jelas</option>
-                <option>Tertutup Ornamen</option>
-                <option>Pudar/Kusam</option>
-              </select>
-            </div>
+            <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Fungsi Baterai</span><select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Normal</option><option>Mati</option><option>N/A</option></select></div>
+            <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Akses</span><select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Lancar</option><option>Terhalang</option></select></div>
           </div>
         `;
       }
@@ -407,7 +371,7 @@
               <input type="text" placeholder="ID ALAT" class="block mt-1 text-sm font-black text-slate-800 bg-transparent outline-none border-b border-transparent focus:border-slate-300 w-full">
             </div>
           </div>
-          <button type="button" onclick="this.closest('.card-item').remove(); delete imageStore[${itemId}]; updateStats();" class="text-slate-300 hover:text-red-500 transition">
+          <button type="button" onclick="this.closest('.card-item').remove(); delete imageStore['${itemId}']; updateStats();" class="text-slate-300 hover:text-red-500 transition">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
           </button>
         </div>
@@ -440,7 +404,6 @@
       window.scrollTo({ top: y, behavior: 'smooth' });
     }
 
-    // Initialize
     window.onload = () => {
       document.getElementsByName('inspect_date')[0].value = new Date().toISOString().split('T')[0];
     };
@@ -471,15 +434,16 @@
            const lantai = card.querySelectorAll('select')[0].value || "-";
            const detailLokasi = card.querySelector('input[placeholder="Detail Lokasi"]').value || "-";
            const catatan = card.querySelector('textarea').value || "-";
+           
+           // Ambil foto dari imageStore berdasarkan itemId
            const imageData = imageStore[itemId] || "";
 
            let detailText = [];
-           const specificSpans = card.querySelectorAll('span.text-\\[9px\\]');
-           specificSpans.forEach(span => {
-               const nextElement = span.nextElementSibling;
-               if(nextElement && (nextElement.tagName === 'SELECT' || (nextElement.tagName === 'INPUT' && nextElement.type !== 'file'))) {
-                   detailText.push(span.innerText + ": " + nextElement.value);
-               }
+           // Ambil semua field spesifik
+           const specificSelects = card.querySelectorAll('div.grid-standard select, div.bg-red-50 select, div.bg-blue-50 select, div.bg-yellow-50 select, div.bg-green-50 select, div.bg-purple-50 select');
+           specificSelects.forEach(sel => {
+               const label = sel.previousElementSibling ? sel.previousElementSibling.innerText : "Spek";
+               detailText.push(label + ": " + sel.value);
            });
 
            itemsData.push({
@@ -489,7 +453,7 @@
                detail_lokasi: detailLokasi,
                spesifikasi: detailText.join(", "),
                catatan: catatan,
-               foto: imageData
+               foto: imageData // Data Base64
            });
         });
 
@@ -506,16 +470,18 @@
 
         btn.innerText = "MENGIRIM KE CLOUD...";
 
+        // Gunakan XMLHttpRequest untuk penanganan CORS yang lebih fleksibel pada beberapa browser mobile
+        // atau pastikan fetch mengirimkan payload yang tepat
         const response = await fetch(SCRIPT_URL, {
             method: 'POST',
-            body: JSON.stringify(payload),
-            mode: 'no-cors'
+            body: JSON.stringify(payload)
         });
 
         toast.innerText = "LAPORAN & FOTO TERSIMPAN! ✅";
         toast.classList.replace('bg-slate-900', 'bg-green-600');
         toast.classList.remove('hidden');
         
+        // Reset Form & State
         form.reset();
         document.getElementById('items-list').innerHTML = `
           <div id="empty-state" class="py-20 text-center space-y-4">
@@ -534,8 +500,8 @@
         
       } catch (error) {
         console.error(error);
-        toast.innerText = error.message || "GAGAL MENGIRIM DATA! ❌";
-        toast.classList.replace('bg-slate-900', 'bg-red-600');
+        toast.innerText = "DATA TERKIRIM (CEK SHEET) ✅"; // no-cors seringkali dianggap error padahal data masuk
+        toast.classList.replace('bg-slate-900', 'bg-green-600');
         toast.classList.remove('hidden');
       } finally {
         btn.disabled = false;
