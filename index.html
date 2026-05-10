@@ -36,12 +36,6 @@
       letter-spacing: 0.05em;
     }
 
-    .grid-standard {
-      display: grid;
-      grid-template-columns: repeat(2, 1fr);
-      gap: 0.5rem;
-    }
-
     .sticky-container {
       position: sticky;
       top: 0;
@@ -53,6 +47,23 @@
       backdrop-filter: blur(10px);
       border-bottom: 1px solid #e2e8f0;
       padding: 0.75rem 1.5rem;
+    }
+
+    .loading-spinner {
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top: 3px solid #fff;
+      width: 20px;
+      height: 20px;
+      animation: spin 1s linear infinite;
+      display: inline-block;
+      vertical-align: middle;
+      margin-right: 8px;
+    }
+
+    @keyframes spin {
+      0% { transform: rotate(0deg); }
+      100% { transform: rotate(360deg); }
     }
   </style>
 </head>
@@ -66,6 +77,9 @@
           <div>
             <h1 class="text-base font-extrabold tracking-tight leading-tight uppercase">Inspeksi Proteksi Kebakaran</h1>
             <p class="text-[9px] text-slate-400 font-bold tracking-[0.1em] uppercase">Dinas Damkartan Kab. Merangin</p>
+          </div>
+          <div class="bg-red-600 px-2 py-1 rounded-md">
+            <span class="text-[8px] font-black italic uppercase">Live Report</span>
           </div>
         </div>
         
@@ -87,6 +101,7 @@
     </div>
 
     <form id="inspectionForm">
+      <!-- SECTION: GENERAL INFO -->
       <div id="sec-general" class="p-6 space-y-6">
         <div class="space-y-4">
           <h2 class="text-xs font-black text-slate-800 uppercase flex items-center gap-2">
@@ -96,16 +111,16 @@
           <div class="space-y-4">
             <div>
               <label class="block text-[10px] font-black text-slate-400 uppercase mb-1">Gedung / Proyek</label>
-              <input type="text" name="building_name" required placeholder="Masukkan nama lokasi" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none">
+              <input type="text" name="building_name" id="building_name" required placeholder="Masukkan nama lokasi" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none">
             </div>
             <div class="grid grid-cols-2 gap-4">
               <div>
                 <label class="block text-[10px] font-black text-slate-400 uppercase mb-1">Tanggal</label>
-                <input type="date" name="inspect_date" required class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none">
+                <input type="date" name="inspect_date" id="inspect_date" required class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none">
               </div>
               <div>
                 <label class="block text-[10px] font-black text-slate-400 uppercase mb-1">Pemeriksa</label>
-                <input type="text" name="inspector_name" required placeholder="Nama" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none">
+                <input type="text" name="inspector_name" id="inspector_name" required placeholder="Nama" class="w-full p-4 bg-slate-50 border border-slate-200 rounded-2xl outline-none">
               </div>
             </div>
           </div>
@@ -132,11 +147,12 @@
 
         <div class="pt-10">
           <button type="submit" id="btnSubmit" class="w-full bg-slate-900 text-white py-5 rounded-2xl font-black text-sm uppercase tracking-widest shadow-2xl hover:bg-black transition-all active:scale-95 disabled:opacity-50">
-            Simpan Laporan
+            Simpan Laporan ke Sheet
           </button>
         </div>
       </div>
 
+      <!-- SECTION: ITEMS LIST -->
       <div id="sec-items" class="hidden px-6 pt-6 space-y-4">
         <div id="items-list" class="space-y-6 min-h-[500px]">
           <div id="empty-state" class="py-20 text-center space-y-4">
@@ -151,10 +167,13 @@
       </div>
     </form>
 
-    <div id="toast" class="hidden fixed bottom-10 left-1/2 -translate-x-1/2 z-[100] px-6 py-4 rounded-2xl bg-slate-900 text-white text-[10px] font-black uppercase tracking-widest shadow-2xl"></div>
+    <div id="toast" class="hidden fixed bottom-10 left-1/2 -translate-x-1/2 z-[100] px-6 py-4 rounded-2xl bg-slate-900 text-white text-[10px] font-black uppercase tracking-widest shadow-2xl text-center min-w-[250px]"></div>
   </div>
 
   <script>
+    // Konfigurasi Google Script URL
+    const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwD_OQWzvJl8WA9Z0YdlKS3JyqOJjm5TpIscNRu0JxROeegtyCgPQNL0c7_14NAIBVURw/exec';
+
     let itemCount = 0;
     const floorOptions = `<option value="">Lantai...</option><option>Basement</option><option>Lantai 1</option><option>Lantai 2</option><option>Lantai 3</option><option>Lantai 4</option><option>Atap</option><option>Luar</option>`;
 
@@ -208,21 +227,21 @@
           <div class="grid grid-cols-2 gap-3">
             <div class="space-y-1">
               <span class="text-[9px] font-black text-slate-400 uppercase">Jenis Media</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-xl text-xs font-bold outline-none">
+              <select name="media" class="w-full p-2 bg-slate-50 border rounded-xl text-xs font-bold outline-none">
                 <option>Dry Chemical Powder</option><option>CO2</option><option>Foam</option><option>Liquid Gas</option>
               </select>
             </div>
             <div class="space-y-1">
               <span class="text-[9px] font-black text-slate-400 uppercase">Berat (kg)</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-xl text-xs font-bold outline-none">
+              <select name="weight" class="w-full p-2 bg-slate-50 border rounded-xl text-xs font-bold outline-none">
                 <option>1 kg</option><option>3 kg</option><option>6 kg</option><option>9 kg</option><option>25 kg</option>
               </select>
             </div>
           </div>
           <div class="grid grid-cols-3 gap-2">
-            <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Tekanan</span><select class="w-full p-2 bg-slate-50 border rounded-lg text-[10px] font-bold outline-none"><option>Normal</option><option>Low</option></select></div>
-            <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Segel</span><select class="w-full p-2 bg-slate-50 border rounded-lg text-[10px] font-bold outline-none"><option>Utuh</option><option>Putus</option></select></div>
-            <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Selang</span><select class="w-full p-2 bg-slate-50 border rounded-lg text-[10px] font-bold outline-none"><option>Baik</option><option>Rusak</option></select></div>
+            <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Tekanan</span><select name="cond1" class="w-full p-2 bg-slate-50 border rounded-lg text-[10px] font-bold outline-none"><option>Normal</option><option>Low</option></select></div>
+            <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Segel</span><select name="cond2" class="w-full p-2 bg-slate-50 border rounded-lg text-[10px] font-bold outline-none"><option>Utuh</option><option>Putus</option></select></div>
+            <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Selang</span><select name="cond3" class="w-full p-2 bg-slate-50 border rounded-lg text-[10px] font-bold outline-none"><option>Baik</option><option>Rusak</option></select></div>
           </div>`;
       } 
       else if (type === 'hydrant') {
@@ -230,14 +249,14 @@
           <div class="grid grid-cols-2 gap-3">
             <div class="space-y-1">
               <span class="text-[9px] font-black text-slate-400 uppercase">Jenis Unit</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-xl text-xs font-bold outline-none">
+              <select name="media" class="w-full p-2 bg-slate-50 border rounded-xl text-xs font-bold outline-none">
                 <option>Indoor (Gedung)</option>
                 <option>Outdoor (Pilar)</option>
               </select>
             </div>
             <div class="space-y-1">
               <span class="text-[9px] font-black text-slate-400 uppercase">Status Tekanan</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-xl text-xs font-bold outline-none">
+              <select name="cond1" class="w-full p-2 bg-slate-50 border rounded-xl text-xs font-bold outline-none">
                 <option>Siaga (Standby)</option>
                 <option>Tidak Bertekanan</option>
                 <option>Bocor</option>
@@ -247,25 +266,25 @@
           <div class="grid grid-cols-4 gap-1.5">
             <div class="space-y-1">
               <span class="text-[8px] font-black text-slate-400 uppercase">Box/Pilar</span>
-              <select class="w-full p-1.5 bg-slate-50 border rounded-lg text-[10px] font-bold outline-none">
+              <select name="cond2" class="w-full p-1.5 bg-slate-50 border rounded-lg text-[10px] font-bold outline-none">
                 <option>Baik</option><option>Rusak</option><option>Hilang</option>
               </select>
             </div>
             <div class="space-y-1">
               <span class="text-[8px] font-black text-slate-400 uppercase">Nozzle</span>
-              <select class="w-full p-1.5 bg-slate-50 border rounded-lg text-[10px] font-bold outline-none">
+              <select name="cond3" class="w-full p-1.5 bg-slate-50 border rounded-lg text-[10px] font-bold outline-none">
                 <option>Ada</option><option>Hilang</option>
               </select>
             </div>
             <div class="space-y-1">
               <span class="text-[8px] font-black text-slate-400 uppercase">Hose</span>
-              <select class="w-full p-1.5 bg-slate-50 border rounded-lg text-[10px] font-bold outline-none">
+              <select name="cond4" class="w-full p-1.5 bg-slate-50 border rounded-lg text-[10px] font-bold outline-none">
                 <option>Baik</option><option>Bocor</option><option>Hilang</option>
               </select>
             </div>
             <div class="space-y-1">
               <span class="text-[8px] font-black text-slate-400 uppercase">Valve</span>
-              <select class="w-full p-1.5 bg-slate-50 border rounded-lg text-[10px] font-bold outline-none">
+              <select name="cond5" class="w-full p-1.5 bg-slate-50 border rounded-lg text-[10px] font-bold outline-none">
                 <option>Normal</option><option>Macet</option>
               </select>
             </div>
@@ -276,9 +295,9 @@
           <div class="grid grid-cols-2 gap-3">
             <div class="space-y-1">
               <span class="text-[9px] font-black text-slate-400 uppercase">Item Alarm</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-xl text-xs font-bold outline-none">
+              <select name="media" class="w-full p-2 bg-slate-50 border rounded-xl text-xs font-bold outline-none">
                 <option>Master Control (MCFA)</option>
-                <option>Manual Call Point (Break Glass)</option>
+                <option>Manual Call Point</option>
                 <option>Heat Detector</option>
                 <option>Smoke Detector</option>
                 <option>Alarm Bell / Strobe</option>
@@ -286,7 +305,7 @@
             </div>
             <div class="space-y-1">
               <span class="text-[9px] font-black text-slate-400 uppercase">Status Sistem</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-xl text-xs font-bold outline-none">
+              <select name="cond1" class="w-full p-2 bg-slate-50 border rounded-xl text-xs font-bold outline-none">
                 <option>Normal (Siaga)</option>
                 <option>Trouble / Fault</option>
                 <option>Disable Zone</option>
@@ -294,24 +313,9 @@
             </div>
           </div>
           <div class="grid grid-cols-3 gap-2">
-            <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Indikator Lampu</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-[10px] font-bold outline-none">
-                <option>Nyala Normal</option><option>Mati</option><option>Kedip (Error)</option>
-              </select>
-            </div>
-            <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Power / Baterai</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-[10px] font-bold outline-none">
-                <option>AC On / Full</option><option>Low Batt</option><option>No Battery</option>
-              </select>
-            </div>
-            <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Respon Suara</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-[10px] font-bold outline-none">
-                <option>Berbunyi</option><option>Lemah</option><option>Mati Total</option>
-              </select>
-            </div>
+            <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Indikator</span><select name="cond2" class="w-full p-2 bg-slate-50 border rounded-lg text-[10px] font-bold outline-none"><option>Normal</option><option>Mati</option><option>Error</option></select></div>
+            <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Power</span><select name="cond3" class="w-full p-2 bg-slate-50 border rounded-lg text-[10px] font-bold outline-none"><option>AC On</option><option>Low Batt</option></select></div>
+            <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Suara</span><select name="cond4" class="w-full p-2 bg-slate-50 border rounded-lg text-[10px] font-bold outline-none"><option>Berbunyi</option><option>Mati</option></select></div>
           </div>`;
       }
       else if (type === 'sprinkler') {
@@ -319,77 +323,42 @@
           <div class="grid grid-cols-2 gap-3">
             <div class="space-y-1">
               <span class="text-[9px] font-black text-slate-400 uppercase">Jenis Head</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-xl text-xs font-bold outline-none">
-                <option>Pendent (Bawah)</option>
-                <option>Upright (Atas)</option>
-                <option>Sidewall (Dinding)</option>
+              <select name="media" class="w-full p-2 bg-slate-50 border rounded-xl text-xs font-bold outline-none">
+                <option>Pendent</option><option>Upright</option><option>Sidewall</option>
               </select>
             </div>
             <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Suhu Aktivasi</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-xl text-xs font-bold outline-none">
-                <option>68°C (Merah)</option>
-                <option>79°C (Kuning)</option>
-                <option>93°C (Hijau)</option>
-                <option>141°C (Biru)</option>
+              <span class="text-[9px] font-black text-slate-400 uppercase">Suhu</span>
+              <select name="weight" class="w-full p-2 bg-slate-50 border rounded-xl text-xs font-bold outline-none">
+                <option>68°C (Merah)</option><option>79°C (Kuning)</option><option>93°C (Hijau)</option>
               </select>
             </div>
           </div>
           <div class="grid grid-cols-3 gap-2">
-            <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Kondisi Head</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-[10px] font-bold outline-none">
-                <option>Bersih</option><option>Berkarat</option><option>Dicat/Tercemar</option><option>Pecah</option>
-              </select>
-            </div>
-            <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Instalasi Pipa</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-[10px] font-bold outline-none">
-                <option>Baik</option><option>Bocor</option><option>Korosi Berat</option>
-              </select>
-            </div>
-            <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Pressure Zone</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-[10px] font-bold outline-none">
-                <option>Sesuai (>4 Bar)</option><option>Rendah</option><option>Nol (Kosong)</option>
-              </select>
-            </div>
+            <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Head</span><select name="cond1" class="w-full p-2 bg-slate-50 border rounded-lg text-[10px] font-bold outline-none"><option>Bersih</option><option>Rusak</option></select></div>
+            <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Pipa</span><select name="cond2" class="w-full p-2 bg-slate-50 border rounded-lg text-[10px] font-bold outline-none"><option>Baik</option><option>Bocor</option></select></div>
+            <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Pressure</span><select name="cond3" class="w-full p-2 bg-slate-50 border rounded-lg text-[10px] font-bold outline-none"><option>Sesuai</option><option>Rendah</option></select></div>
           </div>`;
       }
       else if (type === 'pasif') {
           specificHTML = `
           <div class="grid grid-cols-2 gap-3">
             <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Item Proteksi Pasif</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-xl text-xs font-bold outline-none">
-                <option>Lampu Darurat (Emergency)</option>
-                <option>Penunjuk Arah (Exit Sign)</option>
-                <option>Tangga Darurat</option>
-                <option>Akses Pemadam</option>
+              <span class="text-[9px] font-black text-slate-400 uppercase">Item Pasif</span>
+              <select name="media" class="w-full p-2 bg-slate-50 border rounded-xl text-xs font-bold outline-none">
+                <option>Emergency Light</option><option>Exit Sign</option><option>Tangga Darurat</option><option>Akses Pemadam</option>
               </select>
             </div>
             <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Kelancaran Jalur</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-xl text-xs font-bold outline-none">
-                <option>Bebas Hambatan</option>
-                <option>Ada Halangan</option>
-                <option>Terkunci / Tertutup</option>
+              <span class="text-[9px] font-black text-slate-400 uppercase">Kelancaran</span>
+              <select name="cond1" class="w-full p-2 bg-slate-50 border rounded-xl text-xs font-bold outline-none">
+                <option>Lancar</option><option>Terhalang</option>
               </select>
             </div>
           </div>
           <div class="grid grid-cols-2 gap-3">
-            <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Kondisi Lampu / Sign</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-[10px] font-bold outline-none">
-                <option>Menyala Normal</option><option>Redup</option><option>Mati</option>
-              </select>
-            </div>
-            <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Keterlihatan (Visibility)</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-[10px] font-bold outline-none">
-                <option>Jelas</option><option>Terhalang / Buram</option>
-              </select>
-            </div>
+            <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Kondisi Lampu</span><select name="cond2" class="w-full p-2 bg-slate-50 border rounded-lg text-[10px] font-bold outline-none"><option>Menyala</option><option>Mati</option></select></div>
+            <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Visibilitas</span><select name="cond3" class="w-full p-2 bg-slate-50 border rounded-lg text-[10px] font-bold outline-none"><option>Jelas</option><option>Buram</option></select></div>
           </div>`;
       }
 
@@ -404,7 +373,7 @@
             </div>
             <div>
               <span class="category-badge bg-${c.color}-100 text-${c.color}-700 uppercase">${c.label}</span>
-              <input type="text" placeholder="NOMOR ID / KODE" class="block mt-1 text-sm font-black text-slate-800 bg-transparent outline-none w-full">
+              <input type="text" name="item_id" placeholder="NOMOR ID / KODE" class="block mt-1 text-sm font-black text-slate-800 bg-transparent outline-none w-full">
             </div>
           </div>
           <button type="button" onclick="this.closest('.card-item').remove(); updateStats();" class="text-slate-300">
@@ -412,35 +381,96 @@
           </button>
         </div>
         <div class="grid grid-cols-2 gap-3">
-           <select class="p-3 bg-slate-50 border border-slate-100 rounded-xl text-xs font-bold outline-none">${floorOptions}</select>
-           <input type="text" placeholder="Detail Titik Lokasi" class="p-3 bg-slate-50 border border-slate-100 rounded-xl text-xs outline-none">
+           <select name="floor" class="p-3 bg-slate-50 border border-slate-100 rounded-xl text-xs font-bold outline-none">${floorOptions}</select>
+           <input type="text" name="location" placeholder="Detail Titik Lokasi" class="p-3 bg-slate-50 border border-slate-100 rounded-xl text-xs outline-none">
         </div>
         ${specificHTML}
-        <textarea placeholder="Catatan tambahan..." class="w-full p-3 bg-slate-50 border border-slate-100 rounded-xl text-xs outline-none min-h-[50px]"></textarea>
+        <textarea name="note" placeholder="Catatan tambahan..." class="w-full p-3 bg-slate-50 border border-slate-100 rounded-xl text-xs outline-none min-h-[50px]"></textarea>
       `;
 
       list.insertBefore(card, list.firstChild);
       updateStats();
     }
 
+    function showToast(msg, isError = false) {
+      const toast = document.getElementById('toast');
+      toast.innerText = msg;
+      toast.classList.remove('hidden');
+      toast.className = `fixed bottom-10 left-1/2 -translate-x-1/2 z-[100] px-6 py-4 rounded-2xl text-[10px] font-black uppercase tracking-widest shadow-2xl text-center min-w-[250px] ${isError ? 'bg-red-600' : 'bg-slate-900'} text-white`;
+      setTimeout(() => toast.classList.add('hidden'), 5000);
+    }
+
     window.onload = () => {
-      document.getElementsByName('inspect_date')[0].value = new Date().toISOString().split('T')[0];
+      document.getElementById('inspect_date').value = new Date().toISOString().split('T')[0];
     };
 
     const form = document.getElementById('inspectionForm');
     form.onsubmit = async function(e) {
       e.preventDefault();
       const btn = document.getElementById('btnSubmit');
-      const toast = document.getElementById('toast');
+      
+      // Validasi item minimal
+      const itemCards = document.querySelectorAll('.card-item');
+      if (itemCards.length === 0) {
+        showToast("Tambahkan minimal 1 item temuan!", true);
+        return;
+      }
+
       btn.disabled = true;
-      btn.innerText = "MENYIMPAN...";
-      setTimeout(() => {
-        toast.innerText = "LAPORAN TERSIMPAN! ✅";
-        toast.classList.remove('hidden');
+      btn.innerHTML = `<span class="loading-spinner"></span> MENGIRIM DATA...`;
+
+      // Kumpulkan data umum
+      const data = {
+        building_name: document.getElementById('building_name').value,
+        inspect_date: document.getElementById('inspect_date').value,
+        inspector_name: document.getElementById('inspector_name').value,
+        items: []
+      };
+
+      // Kumpulkan data temuan
+      itemCards.forEach(card => {
+        const item = {
+          category: card.dataset.category,
+          item_id: card.querySelector('[name="item_id"]').value,
+          floor: card.querySelector('[name="floor"]').value,
+          location: card.querySelector('[name="location"]').value,
+          media: card.querySelector('[name="media"]')?.value || '',
+          weight: card.querySelector('[name="weight"]')?.value || '',
+          cond1: card.querySelector('[name="cond1"]')?.value || '',
+          cond2: card.querySelector('[name="cond2"]')?.value || '',
+          cond3: card.querySelector('[name="cond3"]')?.value || '',
+          cond4: card.querySelector('[name="cond4"]')?.value || '',
+          cond5: card.querySelector('[name="cond5"]')?.value || '',
+          note: card.querySelector('[name="note"]').value
+        };
+        data.items.push(item);
+      });
+
+      try {
+        // Kirim ke Google Apps Script via POST
+        const response = await fetch(SCRIPT_URL, {
+          method: 'POST',
+          mode: 'no-cors', // Mode no-cors umum untuk Apps Script POST
+          cache: 'no-cache',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify(data)
+        });
+
+        // Karena mode no-cors tidak bisa baca response body, kita asumsikan sukses jika tidak throw error
+        showToast("LAPORAN BERHASIL TERKIRIM KE SHEET! ✅");
+        form.reset();
+        document.getElementById('items-list').innerHTML = `<div id="empty-state" class="py-20 text-center space-y-4">...</div>`;
+        updateStats();
+        window.scrollTo(0, 0);
+        switchTab('general');
+
+      } catch (err) {
+        console.error(err);
+        showToast("GAGAL MENGIRIM DATA. PERIKSA KONEKSI.", true);
+      } finally {
         btn.disabled = false;
-        btn.innerText = "Simpan Laporan";
-        setTimeout(() => toast.classList.add('hidden'), 3000);
-      }, 1500);
+        btn.innerText = "Simpan Laporan ke Sheet";
+      }
     };
   </script>
 </body>
