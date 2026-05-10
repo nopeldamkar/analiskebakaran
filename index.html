@@ -60,7 +60,7 @@
     <header class="bg-slate-900 px-6 pt-8 pb-6 text-white sticky top-0 z-50 shadow-lg">
       <div class="flex justify-between items-center mb-4">
         <div>
-          <h1 class="text-xl font-extrabold tracking-tight">INSPEKSI PROTEKSI KEBAKARAN</h1>
+          <h1 class="text-xl font-extrabold tracking-tight">INSPEKSI SISTEM PROTEKSI KEBAKARAN</h1>
           <p class="text-[10px] text-slate-400 font-bold tracking-[0.2em] uppercase">DINAS DAMKARTAN KAB. MERANGIN</p>
         </div>
         <div class="bg-red-600 px-3 py-1 rounded-full animate-pulse">
@@ -75,10 +75,10 @@
       </nav>
     </header>
 
-    <form id="inspectionForm" class="p-6">
+    <form id="inspectionForm">
       
       <!-- SECTION: UMUM -->
-      <div id="sec-general" class="space-y-6">
+      <div id="sec-general" class="p-6 space-y-6">
         <div class="space-y-4">
           <h2 class="text-sm font-black text-slate-800 uppercase flex items-center gap-2">
             <span class="w-1.5 h-4 bg-slate-900 rounded-full"></span>
@@ -125,7 +125,7 @@
       </div>
 
       <!-- SECTION: ITEMS -->
-      <div id="sec-items" class="hidden space-y-6">
+      <div id="sec-items" class="hidden p-6 space-y-6">
         <div class="sticky top-32 z-40 bg-white/80 backdrop-blur-md p-2 -mx-2 rounded-2xl shadow-sm border border-slate-100 flex gap-2 overflow-x-auto no-scrollbar">
           <button type="button" onclick="addItem('apar')" class="flex-shrink-0 px-4 py-2 bg-red-600 text-white rounded-xl text-[10px] font-black uppercase shadow-md">APAR</button>
           <button type="button" onclick="addItem('hydrant')" class="flex-shrink-0 px-4 py-2 bg-blue-600 text-white rounded-xl text-[10px] font-black uppercase shadow-md">HYDRANT</button>
@@ -146,7 +146,7 @@
         </div>
       </div>
 
-      <!-- Submit Footer -->
+      <!-- Submit Footer (Dikeluarkan dari Section Tab agar selalu muncul) -->
       <div class="fixed bottom-0 left-0 right-0 p-6 bg-white/90 backdrop-blur-lg border-t border-slate-100 max-w-2xl mx-auto z-50">
         <button type="submit" id="btnSubmit" class="w-full bg-slate-900 text-white py-5 rounded-2xl font-black text-sm uppercase tracking-widest shadow-2xl hover:bg-black transition-all active:scale-95 disabled:opacity-50">
           Finalisasi & Simpan Laporan
@@ -160,6 +160,9 @@
   <script>
     let itemCount = 0;
     const floorOptions = `<option value="">Lantai...</option><option>Luar Ruangan</option><option>Basement</option><option>Lantai 1</option><option>Lantai 2</option><option>Lantai 3</option><option>Lantai 4</option><option>Atap</option>`;
+
+    // Store base64 data per item ID
+    const imageStore = {};
 
     function switchTab(target) {
       document.getElementById('sec-general').classList.toggle('hidden', target !== 'general');
@@ -185,14 +188,16 @@
       document.getElementById('stat-passive').innerText = passive;
     }
 
-    function handleFile(input, previewId) {
+    function handleFile(input, itemId) {
       const file = input.files[0];
       if (file) {
         const reader = new FileReader();
         reader.onload = e => {
-          const img = document.getElementById(previewId);
-          img.src = e.target.result;
+          const base64String = e.target.result;
+          const img = document.getElementById(`prev_${itemId}`);
+          img.src = base64String;
           img.style.display = 'block';
+          imageStore[itemId] = base64String;
         };
         reader.readAsDataURL(file);
       }
@@ -200,7 +205,7 @@
 
     function addItem(type) {
       const list = document.getElementById('items-list');
-      const id = Date.now();
+      const itemId = Date.now();
       const card = document.createElement('div');
       
       const config = {
@@ -214,6 +219,7 @@
       const c = config[type];
       card.className = `card-item bg-white border border-slate-200 rounded-3xl p-6 shadow-sm space-y-4 relative overflow-hidden`;
       card.dataset.category = type;
+      card.dataset.itemId = itemId;
       
       let specificHTML = "";
       if (type === 'apar') {
@@ -401,7 +407,7 @@
               <input type="text" placeholder="ID ALAT" class="block mt-1 text-sm font-black text-slate-800 bg-transparent outline-none border-b border-transparent focus:border-slate-300 w-full">
             </div>
           </div>
-          <button type="button" onclick="this.closest('.card-item').remove(); updateStats();" class="text-slate-300 hover:text-red-500 transition">
+          <button type="button" onclick="this.closest('.card-item').remove(); delete imageStore[${itemId}]; updateStats();" class="text-slate-300 hover:text-red-500 transition">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
           </button>
         </div>
@@ -418,14 +424,14 @@
         <div class="grid grid-cols-2 gap-2">
            <label class="flex items-center justify-center gap-2 p-3 bg-slate-50 border border-slate-100 rounded-xl cursor-pointer hover:bg-slate-100 transition active:scale-95">
               <span class="text-[9px] font-black text-slate-500 uppercase">Kamera</span>
-              <input type="file" accept="image/*" capture="environment" class="hidden" onchange="handleFile(this, 'prev_${id}')">
+              <input type="file" accept="image/*" capture="environment" class="hidden" onchange="handleFile(this, '${itemId}')">
            </label>
            <label class="flex items-center justify-center gap-2 p-3 bg-slate-50 border border-slate-100 rounded-xl cursor-pointer hover:bg-slate-100 transition active:scale-95">
               <span class="text-[9px] font-black text-slate-500 uppercase">Galeri</span>
-              <input type="file" accept="image/*" class="hidden" onchange="handleFile(this, 'prev_${id}')">
+              <input type="file" accept="image/*" class="hidden" onchange="handleFile(this, '${itemId}')">
            </label>
         </div>
-        <img id="prev_${id}" class="photo-preview">
+        <img id="prev_${itemId}" class="photo-preview">
       `;
 
       list.appendChild(card);
@@ -448,7 +454,7 @@
       const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwG82E4QgP8MtCYjeVcNymWwUGBW-D09PF3lgcj3GWWE77bJoYcXzP1Yx1iuzn8X9XebA/exec';
       
       btn.disabled = true;
-      btn.innerText = "MENGIRIM LAPORAN...";
+      btn.innerText = "MENGOLAH DATA & FOTO...";
 
       try {
         const gedung = document.getElementsByName('building_name')[0].value;
@@ -456,12 +462,16 @@
         const pemeriksa = document.getElementsByName('inspector_name')[0].value;
 
         const itemsData = [];
-        document.querySelectorAll('.card-item').forEach(card => {
+        const cards = document.querySelectorAll('.card-item');
+        
+        cards.forEach(card => {
            const category = card.dataset.category;
+           const itemId = card.dataset.itemId;
            const idAlat = card.querySelector('input[placeholder="ID ALAT"]').value || "-";
            const lantai = card.querySelectorAll('select')[0].value || "-";
            const detailLokasi = card.querySelector('input[placeholder="Detail Lokasi"]').value || "-";
            const catatan = card.querySelector('textarea').value || "-";
+           const imageData = imageStore[itemId] || "";
 
            let detailText = [];
            const specificSpans = card.querySelectorAll('span.text-\\[9px\\]');
@@ -478,9 +488,14 @@
                lantai: lantai,
                detail_lokasi: detailLokasi,
                spesifikasi: detailText.join(", "),
-               catatan: catatan
+               catatan: catatan,
+               foto: imageData
            });
         });
+
+        if (itemsData.length === 0) {
+           throw new Error("Tambahkan minimal 1 item temuan!");
+        }
 
         const payload = {
             gedung: gedung,
@@ -489,28 +504,37 @@
             items: itemsData
         };
 
-        await fetch(SCRIPT_URL, {
+        btn.innerText = "MENGIRIM KE CLOUD...";
+
+        const response = await fetch(SCRIPT_URL, {
             method: 'POST',
             body: JSON.stringify(payload),
             mode: 'no-cors'
         });
 
-        toast.innerText = "LAPORAN TERSIMPAN! ✅";
+        toast.innerText = "LAPORAN & FOTO TERSIMPAN! ✅";
         toast.classList.replace('bg-slate-900', 'bg-green-600');
         toast.classList.remove('hidden');
         
         form.reset();
         document.getElementById('items-list').innerHTML = `
           <div id="empty-state" class="py-20 text-center space-y-4">
+            <div class="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto">
+              <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
+                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
+              </svg>
+            </div>
             <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Belum ada item ditambahkan</p>
           </div>
         `;
+        Object.keys(imageStore).forEach(key => delete imageStore[key]);
         updateStats();
         switchTab('general');
         window.scrollTo(0, 0);
         
       } catch (error) {
-        toast.innerText = "GAGAL MENGIRIM DATA! ❌";
+        console.error(error);
+        toast.innerText = error.message || "GAGAL MENGIRIM DATA! ❌";
         toast.classList.replace('bg-slate-900', 'bg-red-600');
         toast.classList.remove('hidden');
       } finally {
