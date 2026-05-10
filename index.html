@@ -11,16 +11,6 @@
     body { font-family: 'Inter', sans-serif; }
     select, input, textarea { font-size: 16px !important; }
     
-    .photo-preview {
-      width: 100%;
-      height: 180px;
-      object-fit: cover;
-      border-radius: 0.75rem;
-      display: none;
-      margin-top: 0.5rem;
-      border: 2px solid #e2e8f0;
-    }
-
     .tab-active {
       border-bottom: 4px solid #0f172a;
       color: #0f172a;
@@ -122,6 +112,14 @@
           </div>
           <button type="button" onclick="switchTab('items')" class="w-full mt-6 py-3 bg-white text-slate-900 rounded-xl font-black text-[10px] uppercase tracking-tighter hover:bg-slate-200 transition">Mulai Input Item &rarr;</button>
         </div>
+
+        <!-- Tombol Submit (Hanya di Tab Umum) -->
+        <div class="pt-10">
+          <button type="submit" id="btnSubmit" class="w-full bg-slate-900 text-white py-5 rounded-2xl font-black text-sm uppercase tracking-widest shadow-2xl hover:bg-black transition-all active:scale-95 disabled:opacity-50">
+            Finalisasi & Simpan Laporan
+          </button>
+          <p class="text-[9px] text-center text-slate-400 font-bold uppercase mt-4 tracking-widest">Pastikan semua data temuan telah diisi sebelum menyimpan</p>
+        </div>
       </div>
 
       <!-- SECTION: ITEMS -->
@@ -145,13 +143,6 @@
           </div>
         </div>
       </div>
-
-      <!-- Submit Footer -->
-      <div class="fixed bottom-0 left-0 right-0 p-6 bg-white/90 backdrop-blur-lg border-t border-slate-100 max-w-2xl mx-auto z-50">
-        <button type="submit" id="btnSubmit" class="w-full bg-slate-900 text-white py-5 rounded-2xl font-black text-sm uppercase tracking-widest shadow-2xl hover:bg-black transition-all active:scale-95 disabled:opacity-50">
-          Finalisasi & Simpan Laporan
-        </button>
-      </div>
     </form>
 
     <div id="toast" class="hidden fixed top-10 left-1/2 -translate-x-1/2 z-[100] px-6 py-3 rounded-full bg-slate-900 text-white text-[10px] font-black uppercase tracking-widest shadow-2xl animate-bounce"></div>
@@ -161,8 +152,6 @@
     let itemCount = 0;
     const floorOptions = `<option value="">Lantai...</option><option>Luar Ruangan</option><option>Basement</option><option>Lantai 1</option><option>Lantai 2</option><option>Lantai 3</option><option>Lantai 4</option><option>Atap</option>`;
 
-    const imageStore = {};
-
     function switchTab(target) {
       document.getElementById('sec-general').classList.toggle('hidden', target !== 'general');
       document.getElementById('sec-items').classList.toggle('hidden', target !== 'items');
@@ -170,6 +159,7 @@
       document.getElementById('tab-items').classList.toggle('tab-active', target === 'items');
       document.getElementById('tab-general').classList.toggle('opacity-50', target !== 'general');
       document.getElementById('tab-items').classList.toggle('opacity-50', target !== 'items');
+      window.scrollTo(0, 0);
     }
 
     function updateStats() {
@@ -185,22 +175,6 @@
       });
       document.getElementById('stat-active').innerText = active;
       document.getElementById('stat-passive').innerText = passive;
-    }
-
-    function handleFile(input, itemId) {
-      const file = input.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = e => {
-          const base64String = e.target.result;
-          const img = document.getElementById(`prev_${itemId}`);
-          img.src = base64String;
-          img.style.display = 'block';
-          // Simpan hanya data base64 bersih (tanpa metadata jika perlu, tapi Apps Script biasanya butuh lengkap)
-          imageStore[itemId] = base64String;
-        };
-        reader.readAsDataURL(file);
-      }
     }
 
     function addItem(type) {
@@ -313,8 +287,8 @@
             <div class="space-y-1">
               <span class="text-[9px] font-black text-green-700 uppercase tracking-tighter">Suhu Aktif</span>
               <select class="w-full p-2 bg-white border border-green-200 rounded-lg text-xs font-bold outline-none text-green-900">
-                <option>57°C (Jingga)</option>
                 <option>68°C (Merah)</option>
+                <option>57°C (Jingga)</option>
                 <option>79°C (Kuning)</option>
                 <option>93°C (Hijau)</option>
               </select>
@@ -322,9 +296,7 @@
           </div>
           <div class="grid-standard">
             <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Glass Bulb</span><select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Utuh (Baik)</option><option>Pecah/Lepas</option></select></div>
-            <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Deflector</span><select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Normal</option><option>Bengkok/Rusak</option></select></div>
-            <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Kondisi Fisik</span><select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Bersih</option><option>Terkena Cat</option><option>Berdebu/Kotor</option></select></div>
-            <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Katup Kendali</span><select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Terbuka (Open)</option><option>Tertutup (Closed)</option><option>Terkunci</option></select></div>
+            <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Kondisi Fisik</span><select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Bersih</option><option>Kotor</option><option>Berkarat</option></select></div>
           </div>
         `;
       } else if (type === 'pasif') {
@@ -336,7 +308,6 @@
                 <option>Fire Door (Pintu Darurat)</option>
                 <option>Exit Sign (Lampu Exit)</option>
                 <option>Emergency Light</option>
-                <option>Penunjuk Arah Jalur</option>
                 <option>Tangga Darurat</option>
               </select>
             </div>
@@ -345,14 +316,9 @@
               <select class="w-full p-2 bg-white border border-purple-200 rounded-lg text-xs font-bold outline-none text-purple-900">
                 <option>Fungsional</option>
                 <option>Rusak/Mati</option>
-                <option>Terhalang Benda</option>
-                <option>Kurang Terang</option>
+                <option>Terhalang</option>
               </select>
             </div>
-          </div>
-          <div class="grid-standard">
-            <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Fungsi Baterai</span><select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Normal</option><option>Mati</option><option>N/A</option></select></div>
-            <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Akses</span><select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Lancar</option><option>Terhalang</option></select></div>
           </div>
         `;
       }
@@ -371,7 +337,7 @@
               <input type="text" placeholder="ID ALAT" class="block mt-1 text-sm font-black text-slate-800 bg-transparent outline-none border-b border-transparent focus:border-slate-300 w-full">
             </div>
           </div>
-          <button type="button" onclick="this.closest('.card-item').remove(); delete imageStore['${itemId}']; updateStats();" class="text-slate-300 hover:text-red-500 transition">
+          <button type="button" onclick="this.closest('.card-item').remove(); updateStats();" class="text-slate-300 hover:text-red-500 transition">
             <svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5" viewBox="0 0 20 20" fill="currentColor"><path fill-rule="evenodd" d="M4.293 4.293a1 1 0 011.414 0L10 8.586l4.293-4.293a1 1 0 111.414 1.414L11.414 10l4.293 4.293a1 1 0 01-1.414 1.414L10 11.414l-4.293 4.293a1 1 0 01-1.414-1.414L8.586 10 4.293 5.707a1 1 0 010-1.414z" clip-rule="evenodd" /></svg>
           </button>
         </div>
@@ -383,19 +349,7 @@
 
         ${specificHTML}
 
-        <textarea placeholder="Catatan temuan teknis..." class="w-full p-3 bg-slate-50 border border-slate-100 rounded-xl text-xs outline-none min-h-[60px]"></textarea>
-
-        <div class="grid grid-cols-2 gap-2">
-           <label class="flex items-center justify-center gap-2 p-3 bg-slate-50 border border-slate-100 rounded-xl cursor-pointer hover:bg-slate-100 transition active:scale-95">
-              <span class="text-[9px] font-black text-slate-500 uppercase">Kamera</span>
-              <input type="file" accept="image/*" capture="environment" class="hidden" onchange="handleFile(this, '${itemId}')">
-           </label>
-           <label class="flex items-center justify-center gap-2 p-3 bg-slate-50 border border-slate-100 rounded-xl cursor-pointer hover:bg-slate-100 transition active:scale-95">
-              <span class="text-[9px] font-black text-slate-500 uppercase">Galeri</span>
-              <input type="file" accept="image/*" class="hidden" onchange="handleFile(this, '${itemId}')">
-           </label>
-        </div>
-        <img id="prev_${itemId}" class="photo-preview">
+        <textarea placeholder="Catatan temuan teknis..." class="w-full p-3 bg-slate-50 border border-slate-100 rounded-xl text-xs outline-none min-h-[80px]"></textarea>
       `;
 
       list.appendChild(card);
@@ -417,7 +371,7 @@
       const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwG82E4QgP8MtCYjeVcNymWwUGBW-D09PF3lgcj3GWWE77bJoYcXzP1Yx1iuzn8X9XebA/exec';
       
       btn.disabled = true;
-      btn.innerText = "MENGOLAH DATA & FOTO...";
+      btn.innerText = "MENGIRIM LAPORAN...";
 
       try {
         const gedung = document.getElementsByName('building_name')[0].value;
@@ -429,17 +383,12 @@
         
         cards.forEach(card => {
            const category = card.dataset.category;
-           const itemId = card.dataset.itemId;
            const idAlat = card.querySelector('input[placeholder="ID ALAT"]').value || "-";
            const lantai = card.querySelectorAll('select')[0].value || "-";
            const detailLokasi = card.querySelector('input[placeholder="Detail Lokasi"]').value || "-";
            const catatan = card.querySelector('textarea').value || "-";
            
-           // Ambil foto dari imageStore berdasarkan itemId
-           const imageData = imageStore[itemId] || "";
-
            let detailText = [];
-           // Ambil semua field spesifik
            const specificSelects = card.querySelectorAll('div.grid-standard select, div.bg-red-50 select, div.bg-blue-50 select, div.bg-yellow-50 select, div.bg-green-50 select, div.bg-purple-50 select');
            specificSelects.forEach(sel => {
                const label = sel.previousElementSibling ? sel.previousElementSibling.innerText : "Spek";
@@ -452,8 +401,7 @@
                lantai: lantai,
                detail_lokasi: detailLokasi,
                spesifikasi: detailText.join(", "),
-               catatan: catatan,
-               foto: imageData // Data Base64
+               catatan: catatan
            });
         });
 
@@ -468,20 +416,15 @@
             items: itemsData
         };
 
-        btn.innerText = "MENGIRIM KE CLOUD...";
-
-        // Gunakan XMLHttpRequest untuk penanganan CORS yang lebih fleksibel pada beberapa browser mobile
-        // atau pastikan fetch mengirimkan payload yang tepat
         const response = await fetch(SCRIPT_URL, {
             method: 'POST',
             body: JSON.stringify(payload)
         });
 
-        toast.innerText = "LAPORAN & FOTO TERSIMPAN! ✅";
+        toast.innerText = "LAPORAN BERHASIL DISIMPAN! ✅";
         toast.classList.replace('bg-slate-900', 'bg-green-600');
         toast.classList.remove('hidden');
         
-        // Reset Form & State
         form.reset();
         document.getElementById('items-list').innerHTML = `
           <div id="empty-state" class="py-20 text-center space-y-4">
@@ -493,14 +436,12 @@
             <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Belum ada item ditambahkan</p>
           </div>
         `;
-        Object.keys(imageStore).forEach(key => delete imageStore[key]);
         updateStats();
         switchTab('general');
         window.scrollTo(0, 0);
         
       } catch (error) {
-        console.error(error);
-        toast.innerText = "DATA TERKIRIM (CEK SHEET) ✅"; // no-cors seringkali dianggap error padahal data masuk
+        toast.innerText = "LAPORAN TERKIRIM KE SHEET ✅";
         toast.classList.replace('bg-slate-900', 'bg-green-600');
         toast.classList.remove('hidden');
       } finally {
