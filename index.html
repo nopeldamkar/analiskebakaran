@@ -35,7 +35,6 @@
       transform: scale(0.99);
     }
 
-    /* Custom Scrollbar */
     .no-scrollbar::-webkit-scrollbar { display: none; }
     .no-scrollbar { -ms-overflow-style: none; scrollbar-width: none; }
 
@@ -47,7 +46,7 @@
       letter-spacing: 0.05em;
     }
 
-    .apar-grid, .hydrant-grid, .alarm-grid, .sprinkler-grid, .pasif-grid {
+    .grid-standard {
       display: grid;
       grid-template-columns: repeat(2, 1fr);
       gap: 0.5rem;
@@ -223,99 +222,44 @@
             <div class="space-y-1">
               <span class="text-[9px] font-black text-red-400 uppercase tracking-tighter">Jenis Media</span>
               <select class="w-full p-2 bg-white border border-red-200 rounded-lg text-xs font-bold outline-none text-red-900">
-                <option>Dry Powder</option>
-                <option>CO2</option>
-                <option>Foam (AFFF)</option>
-                <option>Liquid Gas / Clean Agent</option>
+                <option>Dry Powder</option><option>CO2</option><option>Foam (AFFF)</option><option>Liquid Gas</option>
               </select>
             </div>
             <div class="space-y-1">
-              <span class="text-[9px] font-black text-red-400 uppercase tracking-tighter">Kapasitas (Kg)</span>
+              <span class="text-[9px] font-black text-red-400 uppercase tracking-tighter">Kapasitas</span>
               <select class="w-full p-2 bg-white border border-red-200 rounded-lg text-xs font-bold outline-none text-red-900">
-                <option>1.0 Kg</option>
-                <option>2.0 Kg</option>
-                <option>3.0 Kg</option>
-                <option>4.5 Kg</option>
-                <option>6.0 Kg</option>
-                <option>9.0 Kg</option>
-                <option>25 Kg (Trolley)</option>
-                <option>50 Kg (Trolley)</option>
+                <option>1.0 Kg</option><option>2.0 Kg</option><option>3.0 Kg</option><option>4.5 Kg</option><option>6.0 Kg</option><option>9.0 Kg</option><option>25 Kg</option><option>50 Kg</option>
               </select>
             </div>
           </div>
-          <div class="apar-grid">
-            <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Tekanan (Manometer)</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Normal (Green)</option><option>Low (Under)</option><option>Over (Red)</option></select>
-            </div>
-            <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Segel & Pin</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Utuh (Locked)</option><option>Rusak/Lepas</option></select>
-            </div>
-            <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Selang & Nozzle</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Baik (Flexible)</option><option>Retak/Pecah</option><option>Tersumbat</option></select>
-            </div>
-            <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Fisik Tabung</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Mulus</option><option>Korosi/Karat</option><option>Penyok</option></select>
-            </div>
-            <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Masa Berlaku Media</span>
-              <input type="month" class="w-full p-2 bg-slate-50 border rounded-lg text-[10px] font-bold outline-none">
-            </div>
-            <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Kondisi Media</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Baik/Cair</option><option>Menggumpal</option><option>Kosong</option></select>
-            </div>
+          <div class="grid-standard">
+            <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Manometer</span><select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Normal</option><option>Low</option><option>Over</option></select></div>
+            <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Segel</span><select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Utuh</option><option>Rusak</option></select></div>
+            <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Selang</span><select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Baik</option><option>Rusak</option></select></div>
+            <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Tabung</span><select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Mulus</option><option>Karat</option></select></div>
           </div>
         `;
       } else if (type === 'hydrant') {
         specificHTML = `
           <div class="bg-blue-50 p-3 rounded-2xl grid grid-cols-2 gap-3 mb-2 border border-blue-100">
             <div class="space-y-1">
-              <span class="text-[9px] font-black text-blue-400 uppercase tracking-tighter">Jenis Hydrant</span>
+              <span class="text-[9px] font-black text-blue-500 uppercase tracking-tighter">Jenis Unit</span>
               <select class="w-full p-2 bg-white border border-blue-200 rounded-lg text-xs font-bold outline-none text-blue-900">
-                <option>Indoor Box</option>
-                <option>Outdoor Pillar</option>
-                <option>Siamese Connection</option>
+                <option>Indoor Box A</option><option>Indoor Box B</option><option>Outdoor Pillar</option><option>Pilar One-Way</option><option>Pilar Two-Way</option><option>Siamese Connection</option>
               </select>
             </div>
             <div class="space-y-1">
-              <span class="text-[9px] font-black text-blue-400 uppercase tracking-tighter">Status Tekanan</span>
+              <span class="text-[9px] font-black text-blue-500 uppercase tracking-tighter">Status Tekanan</span>
               <select class="w-full p-2 bg-white border border-blue-200 rounded-lg text-xs font-bold outline-none text-blue-900">
-                <option>Siaga (Standby)</option>
-                <option>Digunakan</option>
-                <option>Bocor/Rembes</option>
-                <option>Kosong</option>
+                <option>Siaga (Standby)</option><option>Bocor (Leakage)</option><option>Kosong</option><option>Rembes</option>
               </select>
             </div>
           </div>
-          <div class="hydrant-grid">
-            <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Kondisi Box</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Bersih & Terkunci</option><option>Kotor/Berdebu</option><option>Rusak/Keropos</option></select>
-            </div>
-            <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Main Valve</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Normal/Lancar</option><option>Macet/Keras</option><option>Patah/Hilang</option></select>
-            </div>
-            <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Hose (Selang)</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Ada (Terlipat Rapi)</option><option>Ada (Berantakan)</option><option>Tidak Ada</option><option>Rusak/Bocor</option></select>
-            </div>
-            <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Nozzle</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Tersedia (Baik)</option><option>Tersedia (Macat)</option><option>Hilang</option></select>
-            </div>
-            <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Kaca & Kunci Box</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Utuh</option><option>Pecah</option><option>Kunci Hilang</option></select>
-            </div>
-            <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Instruksi Penggunaan</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Terbaca Jelas</option><option>Pudar/Rusak</option><option>Tidak Ada</option></select>
-            </div>
+          <div class="grid-standard">
+            <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Box/Pilar</span><select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Baik</option><option>Berkarat</option><option>Penyok</option><option>Terkunci/Macet</option></select></div>
+            <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Nozzle</span><select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Lengkap (Ada)</option><option>Tidak Ada</option><option>Rusak</option></select></div>
+            <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Valve/Kran</span><select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Normal</option><option>Macet</option><option>Bocor</option></select></div>
+            <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Selang (Hose)</span><select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Baik</option><option>Lapuk</option><option>Bocor</option><option>Tidak Ada</option></select></div>
           </div>
         `;
       } else if (type === 'alarm') {
@@ -324,96 +268,61 @@
             <div class="space-y-1">
               <span class="text-[9px] font-black text-yellow-600 uppercase tracking-tighter">Jenis Perangkat</span>
               <select class="w-full p-2 bg-white border border-yellow-200 rounded-lg text-xs font-bold outline-none text-yellow-900">
-                <option>MCFA Panel</option>
-                <option>Smoke Detector</option>
-                <option>Heat Detector</option>
-                <option>Manual Call Point</option>
-                <option>Alarm Bell/Sirine</option>
+                <option>Panel MCFA</option>
+                <option>Detektor Asap (Smoke)</option>
+                <option>Detektor Panas (Heat)</option>
+                <option>Manual Call Point (Breakglass)</option>
+                <option>Alarm Bell / Strobe</option>
+                <option>Terminal Box (TFA)</option>
               </select>
             </div>
             <div class="space-y-1">
-              <span class="text-[9px] font-black text-yellow-600 uppercase tracking-tighter">Indikasi Panel</span>
+              <span class="text-[9px] font-black text-yellow-600 uppercase tracking-tighter">Status Sistem</span>
               <select class="w-full p-2 bg-white border border-yellow-200 rounded-lg text-xs font-bold outline-none text-yellow-900">
-                <option>Normal (Green)</option>
-                <option>Fire (Red)</option>
-                <option>Fault/Trouble</option>
-                <option>Disable/Isolate</option>
+                <option>Normal (Siaga)</option>
+                <option>Trouble (Gangguan)</option>
+                <option>Alarm (Aktif)</option>
+                <option>Baterai Lemah (Low Batt)</option>
               </select>
             </div>
           </div>
-          <div class="alarm-grid">
-            <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Suplai Daya</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>PLN OK</option><option>Genset Only</option><option>Daya Mati</option></select>
-            </div>
-            <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Baterai Cadangan</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Penuh (12V/24V)</option><option>Low Battery</option><option>Rusak/Kosong</option></select>
-            </div>
-            <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Uji Suara/Bell</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Nyaring/Clear</option><option>Lemah/Sember</option><option>Tidak Bunyi</option></select>
-            </div>
-            <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Kondisi Detektor</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Bersih (Sensitif)</option><option>Kotor (Debu)</option><option>Cover Terpasang</option></select>
-            </div>
-            <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Manual Call Point</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Kaca Utuh</option><option>Pecah/Aktif</option><option>Kunci Hilang</option></select>
-            </div>
-            <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Wiring/Kabel</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Rapi & Tertutup</option><option>Terkelupas</option><option>Short Circuit</option></select>
-            </div>
+          <div class="grid-standard">
+            <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Lampu Indikator</span><select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Menyala</option><option>Mati/Padam</option></select></div>
+            <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Fisik Alat</span><select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Bersih/Bagus</option><option>Kotor/Debu</option><option>Rusak/Pecah</option></select></div>
+            <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Kabel/Wiring</span><select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Rapi/Utuh</option><option>Terputus/Terbuka</option></select></div>
+            <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Power Supply</span><select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>AC Normal</option><option>Hanya Baterai</option></select></div>
           </div>
         `;
       } else if (type === 'sprinkler') {
         specificHTML = `
           <div class="bg-green-50 p-3 rounded-2xl grid grid-cols-2 gap-3 mb-2 border border-green-100">
             <div class="space-y-1">
-              <span class="text-[9px] font-black text-green-600 uppercase tracking-tighter">Lokasi / Zone</span>
-              <input type="text" placeholder="Zone (misal: Zone 1)" class="w-full p-2 bg-white border border-green-200 rounded-lg text-xs font-bold outline-none text-green-900">
+              <span class="text-[9px] font-black text-green-700 uppercase tracking-tighter">Tipe Head</span>
+              <select class="w-full p-2 bg-white border border-green-200 rounded-lg text-xs font-bold outline-none text-green-900">
+                <option>Pendent (Bawah)</option>
+                <option>Upright (Atas)</option>
+                <option>Sidewall (Dinding)</option>
+              </select>
             </div>
             <div class="space-y-1">
-              <span class="text-[9px] font-black text-green-600 uppercase tracking-tighter">Status Zone Valve</span>
+              <span class="text-[9px] font-black text-green-700 uppercase tracking-tighter">Suhu Aktif</span>
               <select class="w-full p-2 bg-white border border-green-200 rounded-lg text-xs font-bold outline-none text-green-900">
-                <option>Terbuka (Open)</option>
-                <option>Tertutup (Closed)</option>
-                <option>Tergembok (Locked)</option>
+                <option>57°C (Jingga)</option>
+                <option>68°C (Merah)</option>
+                <option>79°C (Kuning)</option>
+                <option>93°C (Hijau)</option>
               </select>
             </div>
           </div>
-          <div class="sprinkler-grid">
-            <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Kondisi Glass Bulb</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Utuh (Merah)</option><option>Pecah/Aktif</option><option>Pudar Cairan</option></select>
-            </div>
-            <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Kepala Sprinkler</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Bersih</option><option>Berdebu/Kotor</option><option>Berkarat</option><option>Dicat (Bahaya)</option></select>
-            </div>
-            <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Tekanan Zone</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none">
-                <option>Standby (1.4 - 5.5 Bar / 20-80 PSI)</option>
-                <option>Minimum (0.5 Bar / 7 PSI)</option>
-                <option>Low (< 0.5 Bar)</option>
-                <option>Over (> 8 Bar)</option>
-              </select>
-            </div>
-            <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Kebocoran Pipa</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Tidak Ada</option><option>Rembes Halus</option><option>Bocor Deras</option></select>
-            </div>
-            <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Hambatan (Obstruct)</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Bebas</option><option>Terhalang Plafon</option><option>Terhalang Rak</option></select>
-            </div>
-            <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Support/Hanger</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Kokoh</option><option>Kendur</option><option>Patah/Lepas</option></select>
-            </div>
+          <div class="grid-standard">
+            <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Glass Bulb</span><select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Utuh (Baik)</option><option>Pecah/Lepas</option></select></div>
+            <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Deflector</span><select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Normal</option><option>Bengkok/Rusak</option></select></div>
+            <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Kondisi Fisik</span><select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Bersih</option><option>Terkena Cat</option><option>Berdebu/Kotor</option></select></div>
+            <div class="space-y-1"><span class="text-[9px] font-black text-slate-400 uppercase">Katup Kendali</span><select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Terbuka (Open)</option><option>Tertutup (Closed)</option><option>Terkunci</option></select></div>
+          </div>
+          <div class="space-y-1">
+            <span class="text-[9px] font-black text-slate-400 uppercase">Tekanan Manometer (Bar/Psi)</span>
+            <input type="number" step="0.1" placeholder="Contoh: 7.5" class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none">
           </div>
         `;
       } else if (type === 'pasif') {
@@ -423,45 +332,56 @@
               <span class="text-[9px] font-black text-purple-600 uppercase tracking-tighter">Jenis Proteksi</span>
               <select class="w-full p-2 bg-white border border-purple-200 rounded-lg text-xs font-bold outline-none text-purple-900">
                 <option>Fire Door (Pintu Darurat)</option>
-                <option>Fire Stopping (Sealant)</option>
+                <option>Exit Sign (Lampu Exit)</option>
                 <option>Emergency Light</option>
-                <option>Exit Sign / Penunjuk</option>
+                <option>Penunjuk Arah Jalur</option>
                 <option>Tangga Darurat</option>
               </select>
             </div>
             <div class="space-y-1">
-              <span class="text-[9px] font-black text-purple-600 uppercase tracking-tighter">Status Kelayakan</span>
+              <span class="text-[9px] font-black text-purple-600 uppercase tracking-tighter">Kondisi Umum</span>
               <select class="w-full p-2 bg-white border border-purple-200 rounded-lg text-xs font-bold outline-none text-purple-900">
-                <option>Layak (Valid)</option>
-                <option>Perlu Perbaikan</option>
-                <option>Gagal (Critical)</option>
+                <option>Fungsional</option>
+                <option>Rusak/Mati</option>
+                <option>Terhalang Benda</option>
+                <option>Kurang Terang</option>
               </select>
             </div>
           </div>
-          <div class="pasif-grid">
+          <div class="grid-standard">
             <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Pintu (Door Closer)</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Menutup Sempurna</option><option>Macet/Terganjal</option><option>Engsel Rusak</option></select>
+              <span class="text-[9px] font-black text-slate-400 uppercase">Fungsi Baterai</span>
+              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none">
+                <option>Normal (Backup OK)</option>
+                <option>Drop/Lemah</option>
+                <option>Mati Total</option>
+                <option>N/A (Pintu/Tangga)</option>
+              </select>
             </div>
             <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Panic Bar (Handle)</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Lancar (Push OK)</option><option>Keras/Macet</option><option>Patah/Lepas</option></select>
+              <span class="text-[9px] font-black text-slate-400 uppercase">Aksesibilitas</span>
+              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none">
+                <option>Bebas Hambatan</option>
+                <option>Terhalang/Sempit</option>
+                <option>Terkunci (Bahaya)</option>
+              </select>
             </div>
             <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Lampu / Exit Sign</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Menyala Terang</option><option>Redup/Berkedip</option><option>Mati Total</option></select>
+              <span class="text-[9px] font-black text-slate-400 uppercase">Engsel/Panic Bar</span>
+              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none">
+                <option>Lancar (Auto-Close OK)</option>
+                <option>Macet/Keras</option>
+                <option>Rusak/Lepas</option>
+                <option>N/A (Lampu)</option>
+              </select>
             </div>
             <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Kerapatan Sealant</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Rapat (Kedap)</option><option>Ada Celah (Gap)</option><option>Belum Terpasang</option></select>
-            </div>
-            <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Rambu / Marka</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Jelas & Fosfor</option><option>Pudar/Kotor</option><option>Tidak Ada</option></select>
-            </div>
-            <div class="space-y-1">
-              <span class="text-[9px] font-black text-slate-400 uppercase">Hambatan Jalur</span>
-              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none"><option>Steril/Bersih</option><option>Ada Barang</option><option>Sempit</option></select>
+              <span class="text-[9px] font-black text-slate-400 uppercase">Visibilitas</span>
+              <select class="w-full p-2 bg-slate-50 border rounded-lg text-xs font-bold outline-none">
+                <option>Sangat Jelas</option>
+                <option>Tertutup Ornamen</option>
+                <option>Pudar/Kusam</option>
+              </select>
             </div>
           </div>
         `;
@@ -478,7 +398,7 @@
             </div>
             <div>
               <span class="category-badge bg-${c.color}-100 text-${c.color}-700 uppercase">${c.label}</span>
-              <input type="text" placeholder="ID ALAT (Misal: PS-01)" class="block mt-1 text-sm font-black text-slate-800 bg-transparent outline-none border-b border-transparent focus:border-slate-300 w-full">
+              <input type="text" placeholder="ID ALAT" class="block mt-1 text-sm font-black text-slate-800 bg-transparent outline-none border-b border-transparent focus:border-slate-300 w-full">
             </div>
           </div>
           <button type="button" onclick="this.closest('.card-item').remove(); updateStats();" class="text-slate-300 hover:text-red-500 transition">
@@ -497,12 +417,10 @@
 
         <div class="grid grid-cols-2 gap-2">
            <label class="flex items-center justify-center gap-2 p-3 bg-slate-50 border border-slate-100 rounded-xl cursor-pointer hover:bg-slate-100 transition active:scale-95">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 9a2 2 0 012-2h.93a2 2 0 001.664-.89l.812-1.22A2 2 0 0110.07 4h3.86a2 2 0 011.664.89l.812 1.22A2 2 0 0018.07 7H19a2 2 0 012 2v9a2 2 0 01-2 2H5a2 2 0 01-2-2V9z" /></svg>
               <span class="text-[9px] font-black text-slate-500 uppercase">Kamera</span>
               <input type="file" accept="image/*" capture="environment" class="hidden" onchange="handleFile(this, 'prev_${id}')">
            </label>
            <label class="flex items-center justify-center gap-2 p-3 bg-slate-50 border border-slate-100 rounded-xl cursor-pointer hover:bg-slate-100 transition active:scale-95">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-4 w-4 text-slate-400" fill="none" viewBox="0 0 24 24" stroke="currentColor"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M4 16l4.586-4.586a2 2 0 012.828 0L16 16m-2-2l1.586-1.586a2 2 0 012.828 0L20 14m-6-6h.01M6 20h12a2 2 0 002-2V6a2 2 0 00-2-2H6a2 2 0 00-2 2v12a2 2 0 002 2z" /></svg>
               <span class="text-[9px] font-black text-slate-500 uppercase">Galeri</span>
               <input type="file" accept="image/*" class="hidden" onchange="handleFile(this, 'prev_${id}')">
            </label>
@@ -512,7 +430,6 @@
 
       list.appendChild(card);
       updateStats();
-      
       const y = card.getBoundingClientRect().top + window.pageYOffset - 180;
       window.scrollTo({ top: y, behavior: 'smooth' });
     }
@@ -523,39 +440,84 @@
     };
 
     const form = document.getElementById('inspectionForm');
-    form.onsubmit = function(e) {
+    form.onsubmit = async function(e) {
       e.preventDefault();
       const btn = document.getElementById('btnSubmit');
       const toast = document.getElementById('toast');
       
+      const SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbwG82E4QgP8MtCYjeVcNymWwUGBW-D09PF3lgcj3GWWE77bJoYcXzP1Yx1iuzn8X9XebA/exec';
+      
       btn.disabled = true;
-      btn.innerText = "MENGUNGGAH DATA...";
+      btn.innerText = "MENGIRIM LAPORAN...";
 
-      setTimeout(() => {
-        toast.innerText = "LAPORAN BERHASIL DISIMPAN! ✅";
+      try {
+        const gedung = document.getElementsByName('building_name')[0].value;
+        const tanggal = document.getElementsByName('inspect_date')[0].value;
+        const pemeriksa = document.getElementsByName('inspector_name')[0].value;
+
+        const itemsData = [];
+        document.querySelectorAll('.card-item').forEach(card => {
+           const category = card.dataset.category;
+           const idAlat = card.querySelector('input[placeholder="ID ALAT"]').value || "-";
+           const lantai = card.querySelectorAll('select')[0].value || "-";
+           const detailLokasi = card.querySelector('input[placeholder="Detail Lokasi"]').value || "-";
+           const catatan = card.querySelector('textarea').value || "-";
+
+           let detailText = [];
+           const specificSpans = card.querySelectorAll('span.text-\\[9px\\]');
+           specificSpans.forEach(span => {
+               const nextElement = span.nextElementSibling;
+               if(nextElement && (nextElement.tagName === 'SELECT' || (nextElement.tagName === 'INPUT' && nextElement.type !== 'file'))) {
+                   detailText.push(span.innerText + ": " + nextElement.value);
+               }
+           });
+
+           itemsData.push({
+               kategori: category.toUpperCase(),
+               id_alat: idAlat,
+               lantai: lantai,
+               detail_lokasi: detailLokasi,
+               spesifikasi: detailText.join(", "),
+               catatan: catatan
+           });
+        });
+
+        const payload = {
+            gedung: gedung,
+            tanggal: tanggal,
+            pemeriksa: pemeriksa,
+            items: itemsData
+        };
+
+        await fetch(SCRIPT_URL, {
+            method: 'POST',
+            body: JSON.stringify(payload),
+            mode: 'no-cors'
+        });
+
+        toast.innerText = "LAPORAN TERSIMPAN! ✅";
+        toast.classList.replace('bg-slate-900', 'bg-green-600');
         toast.classList.remove('hidden');
         
-        // Reset App
         form.reset();
         document.getElementById('items-list').innerHTML = `
           <div id="empty-state" class="py-20 text-center space-y-4">
-            <div class="w-20 h-20 bg-slate-100 rounded-full flex items-center justify-center mx-auto">
-              <svg xmlns="http://www.w3.org/2000/svg" class="h-10 w-10 text-slate-300" fill="none" viewBox="0 0 24 24" stroke="currentColor">
-                <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 9v3m0 0v3m0-3h3m-3 0H9m12 0a9 9 0 11-18 0 9 9 0 0118 0z" />
-              </svg>
-            </div>
             <p class="text-xs font-bold text-slate-400 uppercase tracking-widest">Belum ada item ditambahkan</p>
           </div>
         `;
         updateStats();
         switchTab('general');
-        
-        btn.disabled = false;
-        btn.innerText = "Finalisasi & Simpan Laporan";
         window.scrollTo(0, 0);
         
+      } catch (error) {
+        toast.innerText = "GAGAL MENGIRIM DATA! ❌";
+        toast.classList.replace('bg-slate-900', 'bg-red-600');
+        toast.classList.remove('hidden');
+      } finally {
+        btn.disabled = false;
+        btn.innerText = "Finalisasi & Simpan Laporan";
         setTimeout(() => toast.classList.add('hidden'), 4000);
-      }, 2000);
+      }
     };
   </script>
 </body>
